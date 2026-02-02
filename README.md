@@ -54,12 +54,13 @@ git clone https://github.com/pikatostes/crm-laravel-sistemas.git
 ```
 2. Acceder a la carpeta del proyecto:
 ```bash
-cd crm
+cd crm-laravel-sistemas
 ```
 
-3. Instalar dependencias de PHP:
+3. Instalar dependencias de PHP y Vite:
 ```bash
 composer install
+npm install
 ```
 
 4. Copiar el archivo de entorno:
