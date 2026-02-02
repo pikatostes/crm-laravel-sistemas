@@ -50,7 +50,7 @@ Cada módulo permite:
 
 1. Clonar el repositorio:
 ```bash
-git clone https://github.com/tuusuario/tu-repositorio.git
+git clone https://github.com/pikatostes/crm-laravel-sistemas.git
 ```
 2. Acceder a la carpeta del proyecto:
 ```bash
@@ -74,7 +74,7 @@ php artisan key:generate
 
 6. Configurar la base de datos en el archivo .env:
 ```env
-DB_DATABASE=crm_laravel
+DB_DATABASE=crm-laravel-sistemas
 DB_USERNAME=root
 DB_PASSWORD=
 ```
