@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('empresa');
             $table->string('direccion')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
