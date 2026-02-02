@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('puesto');
             $table->decimal('salario', 8, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
