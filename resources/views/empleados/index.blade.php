@@ -15,8 +15,9 @@
     <thead>
         <tr>
             <th>Nombre</th>
-            <th>Puesto</th>
             <th>Email</th>
+            <th>Telefono</th>
+            <th>Puesto</th>
             <th>Salario</th>
             <th>Acciones</th>
         </tr>
@@ -25,8 +26,9 @@
         @foreach($empleados as $empleado)
         <tr>
             <td>{{ $empleado->nombre }}</td>
-            <td>{{ $empleado->puesto }}</td>
             <td>{{ $empleado->email }}</td>
+            <td>{{ $empleado->telefono }}</td>
+            <td>{{ $empleado->puesto }}</td>
             <td>{{ $empleado->salario }} €</td>
             <td>
                 <a href="{{ route('empleados.edit',$empleado) }}" class="btn btn-warning btn-sm">

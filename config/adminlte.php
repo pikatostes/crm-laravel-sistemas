@@ -412,6 +412,11 @@ return [
             'url'  => 'proveedores',
             'icon' => 'fas fa-truck',
         ],
+        [
+            'text' => 'Facturas',
+            'url'  => 'facturas',
+            'icon' => 'fas fa-file-invoice',
+        ],
     ],
 
     /*

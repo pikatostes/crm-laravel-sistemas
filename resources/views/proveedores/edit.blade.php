@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<form action="{{ route('proveedores.update',$proveedor) }}" method="POST">
+<form action="{{ route('proveedores.update', $proveedor) }}" method="POST">
     @csrf
     @method('PUT')
 

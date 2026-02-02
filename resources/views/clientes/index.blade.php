@@ -17,6 +17,7 @@
             <th>Nombre</th>
             <th>Email</th>
             <th>Teléfono</th>
+            <th>Dirección</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -26,6 +27,7 @@
             <td>{{ $cliente->nombre }}</td>
             <td>{{ $cliente->email }}</td>
             <td>{{ $cliente->telefono }}</td>
+            <td>{{ $cliente->direccion }}</td>
             <td>
                 <a href="{{ route('clientes.edit',$cliente) }}" class="btn btn-warning btn-sm">
                     Editar
