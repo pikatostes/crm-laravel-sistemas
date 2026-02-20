@@ -22,3 +22,10 @@ Route::resource('empleados', EmpleadoController::class);
 Route::resource('proveedores', ProveedorController::class)
      ->parameters(['proveedores' => 'proveedor']);
 Route::resource('facturas', FacturaController::class);
+// Solo admin puede borrar
+Route::delete('/clientes/{cliente}', [ClientesController::class, 'destroy'])
+    ->name('clientes.destroy')
+    ->middleware('role:admin');
+
+// El resto solo requieren estar autenticado
+Route::resource('clientes', ClientesController::class)->except(['destroy']);
