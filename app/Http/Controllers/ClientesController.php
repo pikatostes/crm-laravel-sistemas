@@ -5,39 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Clientes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\DataTables;
 
 class ClientesController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $user = auth()->user(); // <-- capturarlo aquí fuera
-
-            $clientes = Clientes::select(['id', 'nombre', 'email', 'foto', 'created_at']);
-            return DataTables::of($clientes)
-                ->addColumn('acciones', function ($cliente) use ($user) { // <-- pasarlo con use
-                    $btn = '<a href="' . route('clientes.edit', $cliente->id) . '" class="btn btn-sm btn-warning">Editar</a> ';
-                    if ($user && $user->isAdmin()) { // <-- usarlo directamente
-                        $btn .= '<form action="' . route('clientes.destroy', $cliente->id) . '" method="POST" style="display:inline">
-                        ' . csrf_field() . '
-                        ' . method_field('DELETE') . '
-                        <button class="btn btn-sm btn-danger" onclick="return confirm(\'¿Eliminar?\')">Borrar</button>
-                    </form>';
-                    }
-                    return $btn;
-                })
-                ->addColumn('foto_preview', function ($cliente) {
-                    if ($cliente->foto) {
-                        return '<img src="' . asset('storage/' . $cliente->foto) . '" width="50" class="rounded">';
-                    }
-                    return 'Sin foto';
-                })
-                ->rawColumns(['acciones', 'foto_preview'])
-                ->make(true);
-        }
-
-        return view('clientes.index');
+        $clientes = Clientes::paginate(10); // ← paginate en lugar de all()
+        return view('clientes.index', compact('clientes'));
     }
 
     public function create()

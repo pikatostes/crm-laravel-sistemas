@@ -1,52 +1,98 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Clientes')
+
+@section('content_header')
+    <h1>Clientes</h1>
+@stop
 
 @section('content')
-<div class="container">
-    <div class="d-flex justify-content-between mb-3">
-        <h2>Clientes</h2>
-        <a href="{{ route('clientes.create') }}" class="btn btn-primary">Nuevo Cliente</a>
+<a href="{{ route('clientes.create') }}" class="btn btn-primary mb-3">
+    Nuevo Cliente
+</a>
+
+<div class="card">
+    <div class="card-body">
+        <table id="clientes-table" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Archivo (PDF)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($clientes as $cliente)
+                <tr>
+                    <td class="text-center">
+                        @if($cliente->foto)
+                            <img src="{{ asset('storage/'.$cliente->foto) }}"
+                                 width="50"
+                                 height="50"
+                                 class="rounded shadow-sm"
+                                 style="object-fit:cover">
+                        @else
+                            <span class="text-muted">Sin foto</span>
+                        @endif
+                    </td>
+
+                    <td>{{ $cliente->nombre }}</td>
+                    <td>{{ $cliente->email }}</td>
+                    <td>{{ $cliente->telefono }}</td>
+                    <td>{{ $cliente->direccion }}</td>
+
+                    <td class="text-center">
+                        @if($cliente->archivo)
+                            <a href="{{ asset('storage/'.$cliente->archivo) }}"
+                               target="_blank"
+                               class="btn btn-sm btn-info">
+                                Ver PDF
+                            </a>
+                        @else
+                            <span class="text-muted">Sin archivo</span>
+                        @endif
+                    </td>
+
+                    <td class="text-nowrap">
+                        <a href="{{ route('clientes.edit', $cliente) }}"
+                           class="btn btn-warning btn-sm">
+                            Editar
+                        </a>
+
+                        <form action="{{ route('clientes.destroy', $cliente) }}"
+                              method="POST"
+                              style="display:inline">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Eliminar este cliente?')">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    <table id="tabla-clientes" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Foto</th>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-    </table>
 </div>
-@endsection
+@stop
 
-@push('scripts')
-{{-- DataTables CSS --}}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-{{-- DataTables JS --}}
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
+@section('js')
 <script>
-$(document).ready(function () {
-    $('#tabla-clientes').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route("clientes.index") }}',
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'foto_preview', name: 'foto_preview', orderable: false, searchable: false },
-            { data: 'nombre', name: 'nombre' },
-            { data: 'email', name: 'email' },
-            { data: 'acciones', name: 'acciones', orderable: false, searchable: false },
-        ],
-        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json' }
+    $(function () {
+        $('#clientes-table').DataTable({
+            responsive: true,
+            autoWidth: false,
+            pageLength: 10,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+            }
+        });
     });
-});
 </script>
-@endpush
+@stop
